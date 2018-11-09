@@ -10,9 +10,9 @@
  
 
  
- formula1: $$n==x$$
+ formula1: $$ n==x $$
 
-formula2: $$n!=x$$
+formula2: $$ n!=x $$
 
 formula3: (m==y)
 
