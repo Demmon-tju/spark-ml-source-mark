@@ -8,8 +8,19 @@
 
  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script> 
  
+
  
- $$  x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$ 
+ formula1: $$n==x$$
+
+formula2: $$n!=x$$
+
+formula3: (m==y)
+
+formula4: [m!=y]
+
+formula5: \(k==z\)
+
+formula6: \[k!=z\] 
  
 ## 2.多元逻辑回归  
 ## 3.tips  
