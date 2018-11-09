@@ -8,13 +8,14 @@
  
 
  
- <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+ 
+ 
+## 2.多元逻辑回归  
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
  
 sigmoid=\frac{a}{b}
 
 formula6: \[k!=z\] 
- 
-## 2.多元逻辑回归  
 ## 3.tips  
 
 ## 4.实例 
