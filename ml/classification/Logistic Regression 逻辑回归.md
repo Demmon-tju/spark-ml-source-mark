@@ -10,15 +10,9 @@
  
 
  
- formula1: $$ n==x $$
-
-formula2: $$ n!=x $$
-
-formula3: (m==y)
-
-formula4: [m!=y]
-
-formula5: \(k==z\)
+ <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+ 
+sigmoid=\frac{a}{b}
 
 formula6: \[k!=z\] 
  
