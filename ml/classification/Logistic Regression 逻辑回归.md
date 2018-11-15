@@ -19,14 +19,38 @@
  
 (3)为了减少过拟合，加入正则项，损失函数变为:1.9
 ## 2.多元逻辑回归  
- （1）多元回归类似softmax，类别概率定义为： ![multinomial1](imgs/multinomial1.png "multinomial1") 
+ （1）多元回归类似softmax，类别概率定义为： <div align=center>
+  <img src="imgs/multinomial_1.tiff" width="180" hegiht="100" div align=center /></div>  
+  <div align=center>
+  <img src="imgs/multinomial_2.tiff" width="180" hegiht="100" div align=center /></div> 
+  
+ &nbsp;&nbsp;&nbsp;&nbsp;二元逻辑回归中权重为向量，多元逻辑回归中权重beta为矩阵，相当于多个二元逻辑回归（每个类别/每行）: <div align=center>
+  <img src="imgs/multinomial_2_2.png" width="180" hegiht="100" div align=center /></div>  
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;上述模型中的参数可以任意伸缩，即对于任意常数值，都可以被加到所有参数，而每个类别的概率值不发生变化：  <div align=center>
+<img src="imgs/multinomial_3.tiff" width="400" hegiht="300" div align=center /></div>
    
-二元逻辑回归中权重w为向量，二多元逻辑回归中W为权重矩阵，相当于多个二元逻辑回归（每个类别/每行） ![multinomial3](imgs/multinomial3.png "multinomial3")
-   
-（2）log损失函数则为：![multinomial2](imgs/multinomial2.png "multinomial2")
-对参数矩阵求导，其实是对每个类别的w分别求导： 
- ![multinomial4](imgs/multinomial4.png "multinomial4")
-求导，alpha从公式角度限定是否是第一个类别，kexi根据是否正在计算某个类别的w（某行的w）来限定是否计算第一项：2.1
+（2）对于数据中的一个实例instance，损失函数为：<div align=center>
+<img src="imgs/multinomial_4.tiff" width="300" hegiht="100" div align=center /></div> 
+其中，<img src="imgs/multinomial_5.tiff" width="120" hegiht="100" div align=center /></div>
+ 
+ 不论SGD,LBFGS还是OWLQN最优化，都需要计算损失函数对参数的一阶导数： 
+ <div align=center>
+<img src="imgs/multinomial_6.tiff" width="400" hegiht="300" div align=center /></div> 
+其中，w_i是样本权重（暂时忽略不管）， 而 I_{y=k}：因为对第k个类别的参数beta_k求导，因此只有当前样本的y=k，损失函数的最后一项才计算：
+
+<div align=center>
+<img src="imgs/multinomial_7.tiff" width="120" hegiht="120" div align=center /></div>
+<div align=center>
+<img src="imgs/multinomial_9.tiff" width="300" hegiht="300" div align=center /></div>
+上述公式中，当max(margin)>0时会导致运算溢出，因此需要一些调整，首先损失函数等价变换：
+<div align=center>
+<img src="imgs/multinomial_8.tiff" width="500" hegiht="500" div align=center /></div>  
+进而，multiplier则变成：
+<div align=center>
+<img src="imgs/multinomial_10.tiff" width="300" hegiht="300" div align=center /></div> 
+
+
 
 
 ## 3.实例 
@@ -199,17 +223,7 @@ private class LogisticCostFun(
 上述代码主要功能：（1）计算loss和gradient并且合并；（2）计算L2正则项加入loss和相应gradient；（3）对数据进行standardize。<br>
 （1）loss和gradient： 。<br>
 
-<blockquote>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-     $$
-     P(y_i=0|\vec{x}_i, \beta) = \frac{e^{\vec{x}_i^T \vec{\beta}_0}}{\sum_{k=0}^{K-1}
-        e^{\vec{x}_i^T \vec{\beta}_k}} \\
-     P(y_i=1|\vec{x}_i, \beta) = \frac{e^{\vec{x}_i^T \vec{\beta}_1}}{\sum_{k=0}^{K-1}
-        e^{\vec{x}_i^T \vec{\beta}_k}}\\
-     P(y_i=K-1|\vec{x}_i, \beta) = \frac{e^{\vec{x}_i^T \vec{\beta}_{K-1}}\,}{\sum_{k=0}^{K-1}
-        e^{\vec{x}_i^T \vec{\beta}_k}}
-     $$
-</blockquote>
 
 <br>
+
    类LogisticAggregator中，<br>包括binaryUpdateInPlace和multinomialUpdateInPlace
