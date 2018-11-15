@@ -14,8 +14,10 @@
  对于二分类，分类结果只有两种：y=1 or y=0，另y=1的概率为：1.5，y=0概率则为：1.5 。 
 根据数据X=(x1,x3,...,xn),Y=(y1,y2,...,yn)定义最大似然估计：1.6 ，目的是找到使得likelihood最大化的参数xita，因此对其取log（可以-log最小化，此处未-）：1.6，一阶gradient为：1.7，二阶梯度hessian为：1.8 
  
-（2）最优化：![optimization](imgs/optimization.png "optimization")
- ml.regression采用了L-BFGS(L2)和OWLQN(L1)
+（2）最优化：ml.regression采用了L-BFGS(L2)和OWLQN(L1)
+<div align=center>
+  <img src="imgs/optimization.png" width="400" hegiht="200" div align=center /></div>
+ 
  
 (3)为了减少过拟合，加入正则项，损失函数变为:1.9
 ## 2.多元逻辑回归  
