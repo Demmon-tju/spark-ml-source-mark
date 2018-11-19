@@ -1,7 +1,9 @@
   
 # Logistic Regression 逻辑回归
-## 1.二元逻辑回归   
-(1)回归是解决变量之间的映射关系（x->y），而逻辑回归则通过sigmoid函数将映射值限定在(0,1)。sigmod函数如下：  
+<h2> 一、二元逻辑回归 </h2>  
+<ol type="1">
+  <li>简介</li>
+    回归是解决变量之间的映射关系（x->y），而逻辑回归则通过sigmoid函数将映射值限定在(0,1)。sigmod函数如下：  
  
  <!-- ![sigmoid](./sigmod.png "sigmoid") -->
  
@@ -13,16 +15,19 @@
  
  对于二分类，分类结果只有两种：y=1 or y=0，另y=1的概率为：1.5，y=0概率则为：1.5 。 
 根据数据X=(x1,x3,...,xn),Y=(y1,y2,...,yn)定义最大似然估计：1.6 ，目的是找到使得likelihood最大化的参数xita，因此对其取log（可以-log最小化，此处未-）：1.6，一阶gradient为：1.7，二阶梯度hessian为：1.8 
- 
-（2）最优化：ml.regression采用了L-BFGS(L2)和OWLQN(L1)
+ <li>最优化</li>
+ml.regression采用了L-BFGS(L2)和OWLQN(L1)
 <div align=center>
   <img src="imgs/optimization.png" width="400" hegiht="200" div align=center /></div>
  
- 
-(3)为了减少过拟合，加入正则项，损失函数变为:1.9
-## 2.多元逻辑回归  
- （1）多元回归类似softmax，类别概率定义为： <div align=center>
-  <img src="imgs/multinomial_1.tiff" width="180" hegiht="100" div align=center /></div>  
+<li>过拟合-正则项</li>
+为了减少过拟合，加入正则项，损失函数变为:1.9
+</ol>
+<h2> 二、多元逻辑回归 </h2> 
+<ol type="1">
+  <li>概率定义：</li>
+    spark2中multinomial逻辑回归采用的是softmax（与spark1.6不完全一致），可参考ufldl(http://ufldl.stanford.edu/tutorial/supervised/SoftmaxRegression/)，类别概率定义为： <div align=center>
+  <img src="imgs/multinomial_1.tiff" width="200" hegiht="100" div align=center /></div>  
   <div align=center>
   <img src="imgs/multinomial_2.tiff" width="180" hegiht="100" div align=center /></div> 
   
@@ -31,11 +36,12 @@
  
 &nbsp;&nbsp;&nbsp;&nbsp;上述模型中的参数可以任意伸缩，即对于任意常数值，都可以被加到所有参数，而每个类别的概率值不发生变化：  <div align=center>
 <img src="imgs/multinomial_3.tiff" width="400" hegiht="300" div align=center /></div>
-   
-（2）对于数据中的一个实例instance，损失函数为：<div align=center>
+
+<li>损失函数及其导数</li>   
+    对于数据中的一个实例instance，损失函数为：<div align=center>
 <img src="imgs/multinomial_4.tiff" width="300" hegiht="100" div align=center /></div> 
-其中，<img src="imgs/multinomial_5.tiff" width="120" hegiht="100" div align=center /></div>
- 
+其中，<img src="imgs/multinomial_5.tiff" width="120" hegiht="100" div align=center /></div> 
+<br>
  不论SGD,LBFGS还是OWLQN最优化，都需要计算损失函数对参数的一阶导数： 
  <div align=center>
 <img src="imgs/multinomial_6.tiff" width="400" hegiht="300" div align=center /></div> 
@@ -52,15 +58,17 @@
 <div align=center>
 <img src="imgs/multinomial_10.tiff" width="300" hegiht="300" div align=center /></div> 
 
-
+</ol>  
 
 
 ## 3.实例 
  
 ## 4.代码分析  
 ### 4.1  整体流程
-逻辑回归（mllib/src/main/scala/org/apache/spark/ml/classification/LogisticRegression.scala）的主要代码体现在run函数的 `val (coefficientMatrix, interceptVector, objectiveHistory) = {}` 代码块中。其中前部分初始化参数和计算summary（feature的均值和标准差等），之后则是关键部分：**损失函数costFun和最优化方法optimizer**：   
-如果不使用L1正则化，则采用LBFGS优化，否则利用OWLQN算法优化（因为L1不保证处处可导），两者都属于拟牛顿法，可参考博客http://www.cnblogs.com/vivounicorn/archive/2012/06/25/2561071.html
+逻辑回归（mllib/src/main/scala/org/apache/spark/ml/classification/LogisticRegression.scala）的主要代码体现在run函数的 `val (coefficientMatrix, interceptVector, objectiveHistory) = {}` 代码块中。其中前部分初始化参数和计算summary（feature的均值和标准差等），之后则是关键部分：
+<div style="text-indent:2em;">
+**损失函数costFun和最优化方法optimizer**：
+如果不使用L1正则化，则采用LBFGS优化，否则利用OWLQN算法优化（因为L1不保证处处可导），两者都属于拟牛顿法，可参考博客http://www.cnblogs.com/vivounicorn/archive/2012/06/25/2561071.html</div>
     
         val regParamL1 = $(elasticNetParam) * $(regParam)
         val regParamL2 = (1.0 - $(elasticNetParam)) * $(regParam)
@@ -137,7 +145,8 @@
       var convergenceReason: Option[ConvergenceReason] = None) {}
 
 ### 4.2  损失函数类 LogisticCostFun  
- &nbsp;&nbsp;&nbsp;&nbsp; 作用：在FirstOrderMinimizer的iterations中更新states中使用calculateObjective方法，其中调用DiffFunction.calculate。而LogisticCostFun则继承DiffFunction并重写calculate方法：计算loss 和 gradient with L2 regularization  <br>
+ &nbsp;&nbsp;&nbsp;&nbsp; 作用：在FirstOrderMinimizer的iterations中更新states时使用calculateObjective方法，其中调用DiffFunction.calculate。而LogisticCostFun则继承DiffFunction并重写calculate方法：计算loss 和 gradient with L2 regularization 
+   <br>
   
 ```
 
@@ -222,10 +231,289 @@ private class LogisticCostFun(
 
 ```   
 <br>
-上述代码主要功能：（1）计算loss和gradient并且合并；（2）计算L2正则项加入loss和相应gradient；（3）对数据进行standardize。<br>
-（1）loss和gradient： 。<br>
-
-
+上述代码主要功能：I. 计算loss和gradient并且合并；II. 计算L2正则项加入loss和相应gradient；III. 对数据进行standardization。<br>
+<ol type="I">
+  <li>loss和gradient  
+    损失和梯度的计算在LogisticAggregator类中，包括binaryUpdateInPlace和multinomialUpdateInPlace，下一节会详细介绍。 </li>
+  <li>L2正则项  
+  这里要注意两点：（1）loss和gradient中都要加入相应L2；（2）Intercept不需要正则项</li>
+  <li>standardization  
+  即便我们没有选择standardization，整个计算过程中还是会standardize数据，包括计算LogisticAggregator中计算loss、gradient，这样有利于模型收敛。因此这里需要reverse（有点confused，待后续研究）。</li>
+</ol>
 <br>
+### 4.3   LogisticAggregator
+   &nbsp;&nbsp;&nbsp;&nbsp;该类中包含gradient和loss的计算，以及不同LogisticAggregator之间的合并。而gradient和loss计算又包括两部分二元和多元：binaryUpdateInPlace和multinomialUpdateInPlace
+<ol type="1">
+  <li> binaryUpdateInPlace：binary逻辑回归</li> <br> 
+   
+   ``` 
+  
+  /** Update gradient and loss using binary loss function. */
+  private def binaryUpdateInPlace(
+      features: Vector,
+      weight: Double,
+      label: Double): Unit = {
 
-   类LogisticAggregator中，<br>包括binaryUpdateInPlace和multinomialUpdateInPlace
+    val localFeaturesStd = bcFeaturesStd.value
+    val localCoefficients = bcCoefficients.value
+    val localGradientArray = gradientSumArray
+    //margin即为公式中的margin
+    val margin = - {
+      var sum = 0.0
+      features.foreachActive { (index, value) =>
+        if (localFeaturesStd(index) != 0.0 && value != 0.0) {
+          //除以localFeaturesStd进行standardization
+          sum += localCoefficients(index) * value / localFeaturesStd(index)
+        }
+      }
+      if (fitIntercept) sum += localCoefficients(numFeaturesPlusIntercept - 1)
+      sum
+    }
+    //同公式中的multiplier
+    val multiplier = weight * (1.0 / (1.0 + math.exp(margin)) - label)
+    //梯度更新：同样standardization
+    features.foreachActive { (index, value) =>
+      if (localFeaturesStd(index) != 0.0 && value != 0.0) {
+        localGradientArray(index) += multiplier * value / localFeaturesStd(index)
+      }
+    }
+
+    if (fitIntercept) {
+      localGradientArray(numFeaturesPlusIntercept - 1) += multiplier
+    }
+
+    if (label > 0) {
+      // The following is equivalent to log(1 + exp(margin)) but more numerically stable.
+      lossSum += weight * MLUtils.log1pExp(margin)
+    } else {
+      lossSum += weight * (MLUtils.log1pExp(margin) - margin)
+    }
+  }
+  
+   ```
+   </li> 
+
+<li> multinomialUpdateInPlace：softmax逻辑回归</li> 
+<ol type="a">
+<li>首先计算margin以及maxMargin，如公式所述。其中值得注意的是数据进行standardization，以及是否有截距。</li>
+<br> 
+   
+   ``` 
+  
+  /** Update gradient and loss using multinomial (softmax) loss function. */
+  private def multinomialUpdateInPlace(
+      features: Vector,
+      weight: Double,
+      label: Double): Unit = {
+    // TODO: use level 2 BLAS operations
+    /*
+      Note: this can still be used when numClasses = 2 for binary
+      logistic regression without pivoting.
+     */
+    val localFeaturesStd = bcFeaturesStd.value
+    val localCoefficients = bcCoefficients.value
+    val localGradientArray = gradientSumArray
+
+    // marginOfLabel is margins(label) in the formula
+    var marginOfLabel = 0.0
+    var maxMargin = Double.NegativeInfinity
+    //计算margin，如公式所述
+    val margins = new Array[Double](numClasses)
+    features.foreachActive { (index, value) =>
+      //数据进行standardization
+      val stdValue = value / localFeaturesStd(index)
+      var j = 0
+      while (j < numClasses) {
+        margins(j) += localCoefficients(index * numClasses + j) * stdValue
+        j += 1
+      }
+    }
+    var i = 0
+    while (i < numClasses) {
+      if (fitIntercept) {
+        margins(i) += localCoefficients(numClasses * numFeatures + i)
+      }
+      if (i == label.toInt) marginOfLabel = margins(i)
+      //计算maxMargin
+      if (margins(i) > maxMargin) {
+        maxMargin = margins(i)
+      }
+      i += 1
+    }  
+   ```
+  <br>
+<li>这段计算multiplier，gradient和loss：其中margin统一减去maxMargin以免计算爆炸（公式介绍中有详细说明），同时数据要进行standardization。 
+  
+  其中margin和multiplier是数组，维度取决于类别数，即对于每个类别k来说就是一个浮点数；而localGradientArray则是一个矩阵（这里将矩阵平铺成数组）。  
+  
+tips：可以看成K个binary回归，分别计算margin，multiplier和gradient；一条样本，同时更新所有参数梯度localGradientArray。</li>
+<br> 
+   
+   ``` 
+  
+    /**
+     * When maxMargin is greater than 0, the original formula could cause overflow.
+     * We address this by subtracting maxMargin from all the margins, so it's guaranteed
+     * that all of the new margins will be smaller than zero to prevent arithmetic overflow.
+     */
+    val multipliers = new Array[Double](numClasses)
+    val sum = {
+      var temp = 0.0
+      var i = 0
+      while (i < numClasses) {
+        if (maxMargin > 0) margins(i) -= maxMargin
+        val exp = math.exp(margins(i))
+        temp += exp
+        multipliers(i) = exp
+        i += 1
+      }
+      temp
+    }
+
+    margins.indices.foreach { i =>
+      multipliers(i) = multipliers(i) / sum - (if (label == i) 1.0 else 0.0)
+    }
+    features.foreachActive { (index, value) =>
+      if (localFeaturesStd(index) != 0.0 && value != 0.0) {
+        val stdValue = value / localFeaturesStd(index)
+        var j = 0
+        while (j < numClasses) {
+          localGradientArray(index * numClasses + j) +=
+            weight * multipliers(j) * stdValue
+          j += 1
+        }
+      }
+    }
+    if (fitIntercept) {
+      var i = 0
+      while (i < numClasses) {
+        localGradientArray(numFeatures * numClasses + i) += weight * multipliers(i)
+        i += 1
+      }
+    }
+
+    val loss = if (maxMargin > 0) {
+      math.log(sum) - marginOfLabel + maxMargin
+    } else {
+      math.log(sum) - marginOfLabel
+    }
+    lossSum += weight * loss
+  }  
+   ```
+  </ol>
+   </li>
+</ol> 
+### 4.4   最优化方法（/breeze/optimize/）
+   &nbsp;&nbsp;&nbsp;&nbsp;在LogisticCostFun中只计算了参数的一阶导数gradient，然而源码中用的最优化方法是LBFGS和OWLQN（解决L1-norm不可微），因此只有gradient是不够的。最优化的重点在于确定参数的更新方向和步长。  
+   &nbsp;&nbsp;&nbsp;&nbsp;FirstOrderMinimizer中声明了（1）海塞阵估计方法History（2）参数更新方向chooseDescentDirection（3）步长determineStepSize。在iterations中更新states时要用到上述三个重要模块，具体的定义则在相应的最优化方法中。
+   <ol>
+<li> LBFGS (breeze/optimize/LBFGS.scala)
+   <ol type="i">
+   <li>还塞矩阵估计方法：`type History = LBFGS.ApproximateInverseHessian[T]`</li><br>
+   <li> chooseDescentDirection：迭代方向，海塞阵*梯度<br>
+```
+protected def chooseDescentDirection(state: State, fn: DiffFunction[T]): T = {
+    state.history * state.grad
+  }
+```</li><br>
+  <li> determineStepSize：一维搜索，寻找最佳步长，具体原理此处省略
+
+
+```
+
+/**
+   * Given a direction, perform a line search to find
+   * a step size to descend. The result fulfills the wolfe conditions.
+   *
+   * @param state the current state
+   * @param f The objective
+   * @param dir The step direction
+   * @return stepSize
+   */
+  protected def determineStepSize(state: State, f: DiffFunction[T], dir: T) = {
+    val x = state.x
+    val grad = state.grad
+
+    val ff = LineSearch.functionFromSearchDirection(f, x, dir)
+    val search = new StrongWolfeLineSearch(maxZoomIter = 10, maxLineSearchIter = 10) // TODO: Need good default values here.
+    val alpha = search.minimize(ff, if (state.iter == 0.0) 1.0 / norm(dir) else 1.0)
+
+    if (alpha * norm(grad) < 1E-10)
+      throw new StepSizeUnderflow
+    alpha
+  }
+```
+  </li>
+   </ol>
+   </li>
+<li> OWLQN (breeze/optimize/OWLQN)，继承了LBFGS
+   <ol type="i">
+   <li>还塞矩阵估计方法：继承了LBFGS的history，因为L1-norm的存在与否不影响Hessian矩阵的估计。</li><br>
+   <li> chooseDescentDirection：继承了LBFGS，同时相应调整方向，解决L1不可导（可参考OWLQN原理，次梯度）<br>
+
+
+```
+override protected def chooseDescentDirection(state: State, fn: DiffFunction[T]) = {
+    val descentDir = super.chooseDescentDirection(state.copy(grad = state.adjustedGradient), fn)
+
+    // The original paper requires that the descent direction be corrected to be
+    // in the same directional (within the same hypercube) as the adjusted gradient for proof.
+    // Although this doesn't seem to affect the outcome that much in most of cases, there are some cases
+    // where the algorithm won't converge (confirmed with the author, Galen Andrew).
+    val correctedDir = space.zipMapValues.map(descentDir, state.adjustedGradient, {
+      case (d, g) => if (d * g < 0) d else 0.0
+    })
+
+    correctedDir
+  }
+  }
+```
+
+</li><br>
+<li> determineStepSize：一维搜索，寻找最佳步长，此处感觉和原理不大一样（需要进一步研究）
+
+
+```
+
+override protected def determineStepSize(state: State, f: DiffFunction[T], dir: T) = {
+    val iter = state.iter
+
+    val normGradInDir = {
+      val possibleNorm = dir.dot(state.grad)
+//      if (possibleNorm > 0) { // hill climbing is not what we want. Bad LBFGS.
+//        logger.warn("Direction of positive gradient chosen!")
+//        logger.warn("Direction is:" + possibleNorm)
+//        Reverse the direction, clearly it's a bad idea to go up
+//        dir *= -1.0
+//        dir dot state.grad
+//      } else {
+      possibleNorm
+//      }
+    }
+    
+```
+</li>
+<li> takeStep：OWLQN的takeStep更为复杂，因为要保证迭代前后处于同一象限（更新前权重与更新后权重同方向）
+
+
+```
+
+// projects x to be on the same orthant as y
+  // this basically requires that x'_i = x_i if sign(x_i) == sign(y_i), and 0 otherwise.
+
+  override protected def takeStep(state: State, dir: T, stepSize: Double) = {
+    val stepped = state.x + dir * stepSize
+    val orthant = computeOrthant(state.x, state.adjustedGradient)
+    space.zipMapValues.map(stepped, orthant, {
+      case (v, ov) =>
+        v * I(math.signum(v) == math.signum(ov))
+    })
+  }
+    
+```
+</li>
+
+   </ol>
+   </li>
+
+   </ol>
