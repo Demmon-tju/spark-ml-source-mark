@@ -3,16 +3,23 @@
 <h2> 一、二元逻辑回归 </h2>  
 <ol type="1">
   <li>简介</li>
-    回归是解决变量之间的映射关系（x->y），而逻辑回归则通过sigmoid函数将映射值限定在(0,1)。sigmod图像如下：  
+    回归是解决变量之间的映射关系（x->y），而逻辑回归则通过sigmoid函数将映射值限定在(0,1)。sigmoid图像如下：  
  <div align=center>
   <img src="imgs/sigmod.png" width="200" hegiht="100" div align=center /></div>
-  
-假设特征是x，线性函数可以表示为：1.3，而逻辑回归则是在其基础上套上一个逻辑函数（sigmoid）：1.4 
+  sigmoid公式：<a href="https://www.codecogs.com/eqnedit.php?latex=g(z)=\frac{1}{1&plus;e^{-z}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?g(z)=\frac{1}{1&plus;e^{-z}}" title="g(z)=\frac{1}{1+e^{-z}}" /></a><br>
+假设特征是x，线性函数可以表示为： 
   <a href="https://www.codecogs.com/eqnedit.php?latex=z=\beta_{0}&plus;\beta_{1}&space;\mathit{x}_1&plus;\beta_{2}&space;\mathit{x}_2&plus;...&plus;\beta_{n}&space;\mathit{x}_n&space;=\vec{\beta}\vec{x}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?z=\beta_{0}&plus;\beta_{1}&space;\mathit{x}_1&plus;\beta_{2}&space;\mathit{x}_2&plus;...&plus;\beta_{n}&space;\mathit{x}_n&space;=\vec{\beta}\vec{x}" title="z=\beta_{0}+\beta_{1} \mathit{x}_1+\beta_{2} \mathit{x}_2+...+\beta_{n} \mathit{x}_n =\vec{\beta}\vec{x}" /></a>
+  ，而逻辑回归则是在其基础上套上一个sigmoid函数：
+  <div align=center>
+<a href="https://www.codecogs.com/eqnedit.php?latex=h_{\beta}(x)=g(z)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?h_{\beta}(x)=g(z)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" title="h_{\beta}(x)=g(z)=\frac{1}{1+e^{\vec{\beta}\vec{x}}}" /></a>
+</div>
   逻辑回归属于线性函数，具有线性决策边界（面）：
-<!--![sigmoid](./sigmoid_line.png "sigmoid") -->
- 
- 对于二分类，分类结果只有两种：y=1 or y=0，另y=1的概率为：1.5，y=0概率则为：1.5 。 
+  <div align=center>
+  <img src="imgs/sigmoid_line.png" width="400" hegiht="200" div align=center /></div>
+
+ 对于二分类，分类结果只有两种：y=1 or y=0，其概率分别为 
+ <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" title="P(y=1|\beta )=h_{\beta}(x)=\frac{1}{1+e^{-\vec{\beta}\vec{x}}}" /></a> </div>
+ <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P(y=0|\beta&space;)=1-h_{\beta}(x)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" title="P(y=1|\beta )=h_{\beta}(x)=\frac{1}{1+e^{-\vec{\beta}\vec{x}}}" /></a> </div>
 根据数据X=(x1,x3,...,xn),Y=(y1,y2,...,yn)定义最大似然估计：1.6 ，目的是找到使得likelihood最大化的参数xita，因此对其取log（可以-log最小化，此处未-）：1.6，一阶gradient为：1.7，二阶梯度hessian为：1.8 
  <li>最优化</li>
 ml.regression采用了L-BFGS(L2)和OWLQN(L1)
