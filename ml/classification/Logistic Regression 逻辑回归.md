@@ -3,13 +3,12 @@
 <h2> 一、二元逻辑回归 </h2>  
 <ol type="1">
   <li>简介</li>
-    回归是解决变量之间的映射关系（x->y），而逻辑回归则通过sigmoid函数将映射值限定在(0,1)。sigmod函数如下：  
- 
- <!-- ![sigmoid](./sigmod.png "sigmoid") -->
- 
-
-假设特征是x，参数xita，线性函数可以表示为：1.3，而逻辑回归则是在其基础上套上一个逻辑函数（sigmoid）：1.4 
+    回归是解决变量之间的映射关系（x->y），而逻辑回归则通过sigmoid函数将映射值限定在(0,1)。sigmod图像如下：  
+ <div align=center>
+  <img src="imgs/sigmod.png" width="200" hegiht="100" div align=center /></div>
   
+假设特征是x，线性函数可以表示为：1.3，而逻辑回归则是在其基础上套上一个逻辑函数（sigmoid）：1.4 
+  <a href="https://www.codecogs.com/eqnedit.php?latex=z=\beta_{0}&plus;\beta_{1}&space;\mathit{x}_1&plus;\beta_{2}&space;\mathit{x}_2&plus;...&plus;\beta_{n}&space;\mathit{x}_n&space;=\vec{\beta}\vec{x}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?z=\beta_{0}&plus;\beta_{1}&space;\mathit{x}_1&plus;\beta_{2}&space;\mathit{x}_2&plus;...&plus;\beta_{n}&space;\mathit{x}_n&space;=\vec{\beta}\vec{x}" title="z=\beta_{0}+\beta_{1} \mathit{x}_1+\beta_{2} \mathit{x}_2+...+\beta_{n} \mathit{x}_n =\vec{\beta}\vec{x}" /></a>
   逻辑回归属于线性函数，具有线性决策边界（面）：
 <!--![sigmoid](./sigmoid_line.png "sigmoid") -->
  
@@ -129,7 +128,7 @@ ml.regression采用了L-BFGS(L2)和OWLQN(L1)
           arrayBuilder += state.adjustedValue
         }
         bcFeaturesStd.destroy(blocking = false)
- 其中states表示状态迭代器，每个迭代进行更新，state类在breeze/optimize/FirstOrderMinimizer.scala中，包括梯度，损失值等信息：
+ 其中states表示状态迭代器，每个迭代进行更新，state类在breeze/optimize/FirstOrderMinimizer.scala中，包括x模型参数、value模型loss、grad梯度等：
   
     case class State[+T, +ConvergenceInfo, +History](
        x: T,
@@ -342,11 +341,11 @@ private class LogisticCostFun(
     }  
    ```
   <br>
-<li>这段计算multiplier，gradient和loss：其中margin统一减去maxMargin以免计算爆炸（公式介绍中有详细说明），同时数据要进行standardization。 
+<li>这段计算multiplier，gradient和loss：其中margin统一减去maxMargin以免计算爆炸，同时数据要进行standardization。 
   
   其中margin和multiplier是数组，维度取决于类别数，即对于每个类别k来说就是一个浮点数；而localGradientArray则是一个矩阵（这里将矩阵平铺成数组）。  
   
-tips：可以看成K个binary回归，分别计算margin，multiplier和gradient；一条样本，同时更新所有参数梯度localGradientArray。</li>
+tips：可以看成K个binary回归，分别计算margin，multiplier和gradient；一条样本，同时计算所有参数梯度localGradientArray。</li>
 <br> 
    
    ``` 
