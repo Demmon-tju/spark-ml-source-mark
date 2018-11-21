@@ -19,8 +19,19 @@
 
  对于二分类，分类结果只有两种：y=1 or y=0，其概率分别为 
  <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" title="P(y=1|\beta )=h_{\beta}(x)=\frac{1}{1+e^{-\vec{\beta}\vec{x}}}" /></a> </div>
- <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P(y=0|\beta&space;)=1-h_{\beta}(x)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" title="P(y=1|\beta )=h_{\beta}(x)=\frac{1}{1+e^{-\vec{\beta}\vec{x}}}" /></a> </div>
-根据数据X=(x1,x3,...,xn),Y=(y1,y2,...,yn)定义最大似然估计：1.6 ，目的是找到使得likelihood最大化的参数xita，因此对其取log（可以-log最小化，此处未-）：1.6，一阶gradient为：1.7，二阶梯度hessian为：1.8 
+ <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P(y=0|\beta&space;)=1-h_{\beta}(x)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(y=0|\beta&space;)=1-h_{\beta}(x)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" title="P(y=0|\beta )=1-h_{\beta}(x)=\frac{1}{1+e^{\vec{\beta}\vec{x}}}" /></a> </div>
+因此最大似然估计为：
+<div align=center>
+<a href="https://www.codecogs.com/eqnedit.php?latex=likelihood&space;=\prod_{i}^{&space;}{p(y=1|\beta&space;))^{y_{i}}p(y=0|\beta&space;))^{1-y_{i}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?likelihood&space;=\prod_{i}^{&space;}{p(y=1|\beta&space;))^{y_{i}}p(y=0|\beta&space;))^{1-y_{i}}}" title="likelihood =\prod_{i}^{ }{p(y=1|\beta ))^{y_{i}}p(y=0|\beta ))^{1-y_{i}}}" /></a>
+</div>
+ 对上述公式取log方便计算，同时为了将likelihood最大化问题转化为最小化问题，对上述公式取-log得到损失函数：
+<div align=center>
+<a href="https://www.codecogs.com/eqnedit.php?latex=loss&space;=-log(likelyhood)" target="_blank"><img src="https://latex.codecogs.com/png.latex?loss&space;=-log(likelyhood)" title="loss =-log(likelyhood)" /></a><br>
+<a href="https://www.codecogs.com/eqnedit.php?latex==-\sum&space;y_{i}log(h_{\beta&space;}(x_{i}))&space;&plus;&space;(1-y_{i})log(1-h_{\beta&space;}(x_{i}))" target="_blank"><img src="https://latex.codecogs.com/png.latex?=-\sum&space;y_{i}log(h_{\beta&space;}(x_{i}))&space;&plus;&space;(1-y_{i})log(1-h_{\beta&space;}(x_{i}))" title="=-\sum y_{i}log(h_{\beta }(x_{i})) + (1-y_{i})log(1-h_{\beta }(x_{i}))" /></a><br>
+<a href="https://www.codecogs.com/eqnedit.php?latex==\sum&space;log(1&plus;e^{-\vec{\beta&space;}\vec{x_{i}&space;}})-(-\vec{\beta&space;}\vec{x_{i}&space;})(1-y_{i})" target="_blank"><img src="https://latex.codecogs.com/png.latex?=\sum&space;log(1&plus;e^{-\vec{\beta&space;}\vec{x_{i}&space;}})-(-\vec{\beta&space;}\vec{x_{i}&space;})(1-y_{i})" title="=\sum log(1+e^{-\vec{\beta }\vec{x_{i} }})-(-\vec{\beta }\vec{x_{i} })(1-y_{i})" /></a><br>
+<a href="https://www.codecogs.com/eqnedit.php?latex==\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" target="_blank"><img src="https://latex.codecogs.com/png.latex?=\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" title="=\sum log(1+e^{margin})-(1-y_{i})margin" /></a>
+</div>
+一阶gradient为：1.7，二阶梯度hessian为：1.8 
  <li>最优化</li>
 ml.regression采用了L-BFGS(L2)和OWLQN(L1)
 <div align=center>
