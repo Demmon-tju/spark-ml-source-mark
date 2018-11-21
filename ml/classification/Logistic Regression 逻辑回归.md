@@ -8,43 +8,43 @@
   <img src="imgs/sigmod.png" width="200" hegiht="100" div align=center /></div>
   sigmoid公式：<a href="https://www.codecogs.com/eqnedit.php?latex=g(z)=\frac{1}{1&plus;e^{-z}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?g(z)=\frac{1}{1&plus;e^{-z}}" title="g(z)=\frac{1}{1+e^{-z}}" /></a><br>
 假设特征是x，线性函数可以表示为： 
-  <a href="https://www.codecogs.com/eqnedit.php?latex=z=\beta_{0}&plus;\beta_{1}&space;\mathit{x}_1&plus;\beta_{2}&space;\mathit{x}_2&plus;...&plus;\beta_{n}&space;\mathit{x}_n&space;=\vec{\beta}\vec{x}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?z=\beta_{0}&plus;\beta_{1}&space;\mathit{x}_1&plus;\beta_{2}&space;\mathit{x}_2&plus;...&plus;\beta_{n}&space;\mathit{x}_n&space;=\vec{\beta}\vec{x}" title="z=\beta_{0}+\beta_{1} \mathit{x}_1+\beta_{2} \mathit{x}_2+...+\beta_{n} \mathit{x}_n =\vec{\beta}\vec{x}" /></a>
+  <a href="https://www.codecogs.com/eqnedit.php?latex=z=\beta_{0}&plus;\beta_{1}&space;\mathit{x}_1&plus;\beta_{2}&space;\mathit{x}_2&plus;...&plus;\beta_{n}&space;\mathit{x}_n&space;=\vec{\beta}\vec{x}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?z=\beta_{0}&plus;\beta_{1}&space;\mathit{x}_1&plus;\beta_{2}&space;\mathit{x}_2&plus;...&plus;\beta_{n}&space;\mathit{x}_n&space;=\vec{\beta}\vec{x}" title="z=\beta_{0}+\beta_{1} \mathit{x}_1+\beta_{2} \mathit{x}_2+...+\beta_{n} \mathit{x}_n =\vec{\beta}\vec{x}" /></a><br>
   ，而逻辑回归则是在其基础上套上一个sigmoid函数：
   <div align=center>
 <a href="https://www.codecogs.com/eqnedit.php?latex=h_{\beta}(x)=g(z)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?h_{\beta}(x)=g(z)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" title="h_{\beta}(x)=g(z)=\frac{1}{1+e^{\vec{\beta}\vec{x}}}" /></a>
-</div>
+</div><br>
   逻辑回归属于线性函数，具有线性决策边界（面）：
   <div align=center>
   <img src="imgs/sigmoid_line.png" width="400" hegiht="200" div align=center /></div>
 
  对于二分类，分类结果只有两种：y=1 or y=0，其概率分别为 
- <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" title="P(y=1|\beta )=h_{\beta}(x)=\frac{1}{1+e^{-\vec{\beta}\vec{x}}}" /></a> </div>
- <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P(y=0|\beta&space;)=1-h_{\beta}(x)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(y=0|\beta&space;)=1-h_{\beta}(x)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" title="P(y=0|\beta )=1-h_{\beta}(x)=\frac{1}{1+e^{\vec{\beta}\vec{x}}}" /></a> </div>
+ <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" title="P(y=1|\beta )=h_{\beta}(x)=\frac{1}{1+e^{-\vec{\beta}\vec{x}}}" /></a> </div><br>
+ <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P(y=0|\beta&space;)=1-h_{\beta}(x)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(y=0|\beta&space;)=1-h_{\beta}(x)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" title="P(y=0|\beta )=1-h_{\beta}(x)=\frac{1}{1+e^{\vec{\beta}\vec{x}}}" /></a> </div><br>
 因此最大似然估计为：
 <div align=center>
 <a href="https://www.codecogs.com/eqnedit.php?latex=likelihood&space;=\prod_{i}^{&space;}{p(y=1|\beta&space;))^{y_{i}}p(y=0|\beta&space;))^{1-y_{i}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?likelihood&space;=\prod_{i}^{&space;}{p(y=1|\beta&space;))^{y_{i}}p(y=0|\beta&space;))^{1-y_{i}}}" title="likelihood =\prod_{i}^{ }{p(y=1|\beta ))^{y_{i}}p(y=0|\beta ))^{1-y_{i}}}" /></a>
-</div>
- 对上述公式取log方便计算，同时为了将likelihood最大化问题转化为最小化问题，对上述公式取-log得到损失函数：
+</div><br>
+ 对上述公式取log方便计算，同时为了将likelihood最大化问题转化为最小化问题，对上述公式取-log得到损失函数：<br>
 <div align=center style="border:1px ;width:500px;margin:auto">
 <div align=left>
-<a href="https://www.codecogs.com/eqnedit.php?latex=loss&space;=-log(likelyhood)" target="_blank"><img src="https://latex.codecogs.com/png.latex?loss&space;=-log(likelyhood)" title="loss =-log(likelyhood)" /></a><br>
-<a href="https://www.codecogs.com/eqnedit.php?latex==-\sum&space;y_{i}log(h_{\beta&space;}(x_{i}))&space;&plus;&space;(1-y_{i})log(1-h_{\beta&space;}(x_{i}))" target="_blank"><img src="https://latex.codecogs.com/png.latex?=-\sum&space;y_{i}log(h_{\beta&space;}(x_{i}))&space;&plus;&space;(1-y_{i})log(1-h_{\beta&space;}(x_{i}))" title="=-\sum y_{i}log(h_{\beta }(x_{i})) + (1-y_{i})log(1-h_{\beta }(x_{i}))" /></a><br>
-<a href="https://www.codecogs.com/eqnedit.php?latex==\sum&space;log(1&plus;e^{-\vec{\beta&space;}\vec{x_{i}&space;}})-(-\vec{\beta&space;}\vec{x_{i}&space;})(1-y_{i})" target="_blank"><img src="https://latex.codecogs.com/png.latex?=\sum&space;log(1&plus;e^{-\vec{\beta&space;}\vec{x_{i}&space;}})-(-\vec{\beta&space;}\vec{x_{i}&space;})(1-y_{i})" title="=\sum log(1+e^{-\vec{\beta }\vec{x_{i} }})-(-\vec{\beta }\vec{x_{i} })(1-y_{i})" /></a><br>
+<a href="https://www.codecogs.com/eqnedit.php?latex=loss&space;=-log(likelyhood)" target="_blank"><img src="https://latex.codecogs.com/png.latex?loss&space;=-log(likelyhood)" title="loss =-log(likelyhood)" /></a><br><br>
+<a href="https://www.codecogs.com/eqnedit.php?latex==-\sum&space;y_{i}log(h_{\beta&space;}(x_{i}))&space;&plus;&space;(1-y_{i})log(1-h_{\beta&space;}(x_{i}))" target="_blank"><img src="https://latex.codecogs.com/png.latex?=-\sum&space;y_{i}log(h_{\beta&space;}(x_{i}))&space;&plus;&space;(1-y_{i})log(1-h_{\beta&space;}(x_{i}))" title="=-\sum y_{i}log(h_{\beta }(x_{i})) + (1-y_{i})log(1-h_{\beta }(x_{i}))" /></a><br><br>
+<a href="https://www.codecogs.com/eqnedit.php?latex==\sum&space;log(1&plus;e^{-\vec{\beta&space;}\vec{x_{i}&space;}})-(-\vec{\beta&space;}\vec{x_{i}&space;})(1-y_{i})" target="_blank"><img src="https://latex.codecogs.com/png.latex?=\sum&space;log(1&plus;e^{-\vec{\beta&space;}\vec{x_{i}&space;}})-(-\vec{\beta&space;}\vec{x_{i}&space;})(1-y_{i})" title="=\sum log(1+e^{-\vec{\beta }\vec{x_{i} }})-(-\vec{\beta }\vec{x_{i} })(1-y_{i})" /></a><br><br>
 <a href="https://www.codecogs.com/eqnedit.php?latex==\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" target="_blank"><img src="https://latex.codecogs.com/png.latex?=\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" title="=\sum log(1+e^{margin})-(1-y_{i})margin" /></a>
-</div></div>
+</div></div><br>
 考虑一个样本比较方便，spark中也是这样做的，针对样本i，loss对于参数j的一阶gradient为： 
 <div align=center>
 <a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;loss}{\partial&space;\beta&space;_{j}}=(h_{\beta&space;}(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast&space;multiplyer" target="_blank"><img src="https://latex.codecogs.com/png.latex?\frac{\partial&space;loss}{\partial&space;\beta&space;_{j}}=(h_{\beta&space;}(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast&space;multiplyer" title="\frac{\partial loss}{\partial \beta _{j}}=(h_{\beta }(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast multiplyer" /></a>
-</div>
+</div><br>
 tips：以上margin和multiplier和spark源码中的变量一致。
 <br><br>
  <li>过拟合-正则项</li>
-为了减少过拟合，在损失函数中加入正则项，其目的是对参数进行限制，与数据无关。
+为了减少过拟合，在损失函数中加入正则项，其目的是对参数进行限制，与数据无关。<br>
 <div align=center>
-<a href="https://www.codecogs.com/eqnedit.php?latex=L_{total}(\beta&space;,x)=L_{model}(\beta&space;,x)&plus;L_{reg}(\beta)" target="_blank"><img src="https://latex.codecogs.com/png.latex?L_{total}(\beta&space;,x)=L_{model}(\beta&space;,x)&plus;L_{reg}(\beta)" title="L_{total}(\beta ,x)=L_{model}(\beta ,x)+L_{reg}(\beta)" /></a></div>
-常见的正则化手段：L1和L2。L1由于并非处处可导，因此求解需要专门的方法例如OWLQN
+<a href="https://www.codecogs.com/eqnedit.php?latex=L_{total}(\beta&space;,x)=L_{model}(\beta&space;,x)&plus;L_{reg}(\beta)" target="_blank"><img src="https://latex.codecogs.com/png.latex?L_{total}(\beta&space;,x)=L_{model}(\beta&space;,x)&plus;L_{reg}(\beta)" title="L_{total}(\beta ,x)=L_{model}(\beta ,x)+L_{reg}(\beta)" /></a></div><br>
+常见的正则化手段：L1和L2。L1由于并非处处可导，因此求解需要专门的方法例如OWLQN<br>
 <div align=center>
-<a href="https://www.codecogs.com/eqnedit.php?latex=L1&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\left&space;|&space;\beta&space;\right&space;|" target="_blank"><img src="https://latex.codecogs.com/png.latex?L1&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\left&space;|&space;\beta&space;\right&space;|" title="L1 : L_{reg}(\beta)=\lambda \sum \left | \beta \right |" /></a> <br>
+<a href="https://www.codecogs.com/eqnedit.php?latex=L1&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\left&space;|&space;\beta&space;\right&space;|" target="_blank"><img src="https://latex.codecogs.com/png.latex?L1&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\left&space;|&space;\beta&space;\right&space;|" title="L1 : L_{reg}(\beta)=\lambda \sum \left | \beta \right |" /></a> <br><br>
 <a href="https://www.codecogs.com/eqnedit.php?latex=L2&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\beta&space;_{i}^{2}" target="_blank"><img src="https://latex.codecogs.com/png.latex?L2&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\beta&space;_{i}^{2}" title="L2 : L_{reg}(\beta)=\lambda \sum \beta _{i}^{2}" /></a>
 </div>
 <br><br>
