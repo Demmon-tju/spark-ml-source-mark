@@ -32,14 +32,28 @@
 <a href="https://www.codecogs.com/eqnedit.php?latex==\sum&space;log(1&plus;e^{-\vec{\beta&space;}\vec{x_{i}&space;}})-(-\vec{\beta&space;}\vec{x_{i}&space;})(1-y_{i})" target="_blank"><img src="https://latex.codecogs.com/png.latex?=\sum&space;log(1&plus;e^{-\vec{\beta&space;}\vec{x_{i}&space;}})-(-\vec{\beta&space;}\vec{x_{i}&space;})(1-y_{i})" title="=\sum log(1+e^{-\vec{\beta }\vec{x_{i} }})-(-\vec{\beta }\vec{x_{i} })(1-y_{i})" /></a><br>
 <a href="https://www.codecogs.com/eqnedit.php?latex==\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" target="_blank"><img src="https://latex.codecogs.com/png.latex?=\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" title="=\sum log(1+e^{margin})-(1-y_{i})margin" /></a>
 </div></div>
-一阶gradient为：1.7，二阶梯度hessian为：1.8 
+考虑一个样本比较方便，spark中也是这样做的，针对样本i，loss对于参数j的一阶gradient为： 
+<div align=center>
+<a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;loss}{\partial&space;\beta&space;_{j}}=(h_{\beta&space;}(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast&space;multiplyer" target="_blank"><img src="https://latex.codecogs.com/png.latex?\frac{\partial&space;loss}{\partial&space;\beta&space;_{j}}=(h_{\beta&space;}(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast&space;multiplyer" title="\frac{\partial loss}{\partial \beta _{j}}=(h_{\beta }(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast multiplyer" /></a>
+</div>
+tips：以上margin和multiplier和spark源码中的变量一致。
+<br><br>
+ <li>过拟合-正则项</li>
+为了减少过拟合，在损失函数中加入正则项，其目的是对参数进行限制，与数据无关。
+<div align=center>
+<a href="https://www.codecogs.com/eqnedit.php?latex=L_{total}(\beta&space;,x)=L_{model}(\beta&space;,x)&plus;L_{reg}(\beta)" target="_blank"><img src="https://latex.codecogs.com/png.latex?L_{total}(\beta&space;,x)=L_{model}(\beta&space;,x)&plus;L_{reg}(\beta)" title="L_{total}(\beta ,x)=L_{model}(\beta ,x)+L_{reg}(\beta)" /></a></div>
+常见的正则化手段：L1和L2。L1由于并非处处可导，因此求解需要专门的方法例如OWLQN
+<div align=center>
+<a href="https://www.codecogs.com/eqnedit.php?latex=L1&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\left&space;|&space;\beta&space;\right&space;|" target="_blank"><img src="https://latex.codecogs.com/png.latex?L1&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\left&space;|&space;\beta&space;\right&space;|" title="L1 : L_{reg}(\beta)=\lambda \sum \left | \beta \right |" /></a> <br>
+<a href="https://www.codecogs.com/eqnedit.php?latex=L2&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\beta&space;_{i}^{2}" target="_blank"><img src="https://latex.codecogs.com/png.latex?L2&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\beta&space;_{i}^{2}" title="L2 : L_{reg}(\beta)=\lambda \sum \beta _{i}^{2}" /></a>
+</div>
+<br><br>
  <li>最优化</li>
-ml.regression采用了L-BFGS(L2)和OWLQN(L1)
+lr.regression采用了L-BFGS(L2)和OWLQN(L1)，分别针对L2和L1正则化，具体原理网上资料很多可自行查找
 <div align=center>
   <img src="imgs/optimization.png" width="400" hegiht="200" div align=center /></div>
  
-<li>过拟合-正则项</li>
-为了减少过拟合，加入正则项，损失函数变为:1.9
+
 </ol>
 <h2> 二、多元逻辑回归 </h2> 
 <ol type="1">
