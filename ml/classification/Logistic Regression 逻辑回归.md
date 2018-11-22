@@ -51,7 +51,7 @@ tips：以上margin和multiplier和spark源码中的变量一致。
 </div>
 <br><br>
  <li>最优化</li>
-lr.regression采用了L-BFGS(L2)和OWLQN(L1)，分别针对L2和L1正则化，具体原理网上资料很多可自行查找
+lr.regression采用了L-BFGS(L2)和OWLQN(L1)，分别针对L2和L1正则化，可参考<a href="http://www.cnblogs.com/vivounicorn/archive/2012/06/25/2561071.html">博客</a>
 <div align=center>
   <img src="imgs/optimization.png" width="400" hegiht="200" div align=center /></div>
  
@@ -97,6 +97,7 @@ lr.regression采用了L-BFGS(L2)和OWLQN(L1)，分别针对L2和L1正则化，�
 
 
 <h2>三.实例</h2> 
+<div>
 ```
 import org.apache.spark.ml.classification.LogisticRegression
 
@@ -129,13 +130,14 @@ println(s"Multinomial intercepts: ${mlrModel.interceptVector}")
 
 //多分类与上述类似，省略
 ```
+</div>
  
 <h2>四.代码分析</h2>  
 <h3>4.1  整体流程</h3>
 逻辑回归（mllib/src/main/scala/org/apache/spark/ml/classification/LogisticRegression.scala）的主要代码体现在run函数的 `val (coefficientMatrix, interceptVector, objectiveHistory) = {}` 代码块中。其中前部分初始化参数和计算summary（feature的均值和标准差等），之后则是关键部分：
 <div style="text-indent:2em;">
 **损失函数costFun和最优化方法optimizer**：
-如果不使用L1正则化，则采用LBFGS优化，否则利用OWLQN算法优化（因为L1不保证处处可导），两者都属于拟牛顿法，可参考博客http://www.cnblogs.com/vivounicorn/archive/2012/06/25/2561071.html</div>
+如果不使用L1正则化，则采用LBFGS优化，否则利用OWLQN算法优化（因为L1不保证处处可导），两者都属于拟牛顿法</div>
     
         val regParamL1 = $(elasticNetParam) * $(regParam)
         val regParamL2 = (1.0 - $(elasticNetParam)) * $(regParam)
