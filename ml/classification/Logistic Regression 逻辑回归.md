@@ -559,3 +559,6 @@ override protected def determineStepSize(state: State, f: DiffFunction[T], dir: 
    </li>
 
    </ol>
+<h3>参考文献</h3>
+<a href="http://ufldl.stanford.edu/tutorial/supervised/SoftmaxRegression/">【1】ufldl-SoftmaxRegression</a><br>
+<a href="http://www.cnblogs.com/vivounicorn/archive/2012/06/25/2561071.html">【2】博客OWLQN</a>
