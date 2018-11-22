@@ -96,10 +96,42 @@ lr.regression采用了L-BFGS(L2)和OWLQN(L1)，分别针对L2和L1正则化，�
 </ol>  
 
 
-## 3.实例 
+<h2>三.实例</h2> 
+```
+import org.apache.spark.ml.classification.LogisticRegression
+
+// Load training data
+val training = spark.read.format("libsvm").load("data/mllib/sample_libsvm_data.txt")
+
+val lr = new LogisticRegression()
+  .setMaxIter(10)
+  .setRegParam(0.3)
+  .setElasticNetParam(0.8)
+
+// Fit the model
+val lrModel = lr.fit(training)
+
+// Print the coefficients and intercept for logistic regression
+println(s"Coefficients: ${lrModel.coefficients} Intercept: ${lrModel.intercept}")
+
+// We can also use the multinomial family for binary classification
+val mlr = new LogisticRegression()
+  .setMaxIter(10)
+  .setRegParam(0.3)
+  .setElasticNetParam(0.8)
+  .setFamily("multinomial")
+
+val mlrModel = mlr.fit(training)
+
+// Print the coefficients and intercepts for logistic regression with multinomial family
+println(s"Multinomial coefficients: ${mlrModel.coefficientMatrix}")
+println(s"Multinomial intercepts: ${mlrModel.interceptVector}")
+
+//多分类与上述类似，省略
+```
  
-## 4.代码分析  
-### 4.1  整体流程
+<h2>四.代码分析</h2>  
+<h3>4.1  整体流程</h3>
 逻辑回归（mllib/src/main/scala/org/apache/spark/ml/classification/LogisticRegression.scala）的主要代码体现在run函数的 `val (coefficientMatrix, interceptVector, objectiveHistory) = {}` 代码块中。其中前部分初始化参数和计算summary（feature的均值和标准差等），之后则是关键部分：
 <div style="text-indent:2em;">
 **损失函数costFun和最优化方法optimizer**：
@@ -180,7 +212,7 @@ lr.regression采用了L-BFGS(L2)和OWLQN(L1)，分别针对L2和L1正则化，�
       searchFailed: Boolean = false,
       var convergenceReason: Option[ConvergenceReason] = None) {}
 
-### 4.2  损失函数类 LogisticCostFun  
+<h3>4.2  损失函数类 LogisticCostFun</h3>  
  <div style="text-indent:2em;">
  *作用*：在FirstOrderMinimizer的iterations中更新states时使用calculateObjective方法，其中调用DiffFunction.calculate。而LogisticCostFun则继承DiffFunction并重写calculate方法：计算loss 和 gradient with L2 regularization </div>
    <br>
@@ -278,7 +310,7 @@ private class LogisticCostFun(
   即便我们没有选择standardization，整个计算过程中还是会standardize数据，包括计算LogisticAggregator中计算loss、gradient，这样有利于模型收敛。因此这里需要reverse（有点confused，待后续研究）。</li>
 </ol>
 <br>
-### 4.3   LogisticAggregator
+<h3> 4.3   LogisticAggregator </h3>
    <div style="text-indent:2em;">
    该类中包含gradient和loss的计算，以及不同LogisticAggregator之间的合并。而gradient和loss计算又包括两部分二元和多元：binaryUpdateInPlace和multinomialUpdateInPlace</div>
 <ol type="1">
@@ -443,7 +475,7 @@ tips：可以看成K个binary回归，分别计算margin，multiplier和gradient
   </ol>
    </li>
 </ol> 
-### 4.4   最优化方法（/breeze/optimize/）
+<h3>4.4   最优化方法（/breeze/optimize/）</h3>
    <div style="text-indent:2em;">
    在LogisticCostFun中只计算了参数的一阶导数gradient，然而源码中用的最优化方法是LBFGS和OWLQN（解决L1-norm不可微），因此只有gradient是不够的。最优化的重点在于确定参数的更新方向和步长。</div>  
    <div style="text-indent:2em;">
