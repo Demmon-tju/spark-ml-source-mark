@@ -97,21 +97,19 @@ lr.regression采用了L-BFGS(L2)和OWLQN(L1)，分别针对L2和L1正则化，�
 
 
 <h2>三.实例</h2> 
-<div>
-```
-import org.apache.spark.ml.classification.LogisticRegression
 
+<br>
+<div>
+<pre><code>
+import org.apache.spark.ml.classification.LogisticRegression
 // Load training data
 val training = spark.read.format("libsvm").load("data/mllib/sample_libsvm_data.txt")
-
 val lr = new LogisticRegression()
   .setMaxIter(10)
   .setRegParam(0.3)
   .setElasticNetParam(0.8)
-
 // Fit the model
 val lrModel = lr.fit(training)
-
 // Print the coefficients and intercept for logistic regression
 println(s"Coefficients: ${lrModel.coefficients} Intercept: ${lrModel.intercept}")
 
@@ -121,17 +119,19 @@ val mlr = new LogisticRegression()
   .setRegParam(0.3)
   .setElasticNetParam(0.8)
   .setFamily("multinomial")
-
+  
 val mlrModel = mlr.fit(training)
 
 // Print the coefficients and intercepts for logistic regression with multinomial family
 println(s"Multinomial coefficients: ${mlrModel.coefficientMatrix}")
 println(s"Multinomial intercepts: ${mlrModel.interceptVector}")
 
-//多分类与上述类似，省略
-```
+//多分类与上述类似，
+</code></pre><br>
 </div>
  
+
+
 <h2>四.代码分析</h2>  
 <h3>4.1  整体流程</h3>
 逻辑回归（mllib/src/main/scala/org/apache/spark/ml/classification/LogisticRegression.scala）的主要代码体现在run函数的 `val (coefficientMatrix, interceptVector, objectiveHistory) = {}` 代码块中。其中前部分初始化参数和计算summary（feature的均值和标准差等），之后则是关键部分：
