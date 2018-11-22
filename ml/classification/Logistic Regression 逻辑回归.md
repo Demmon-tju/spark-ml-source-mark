@@ -3,28 +3,28 @@
 <h2> 一、二元逻辑回归 </h2>  
 <ol type="1">
   <li>简介</li>
-    回归是解决变量之间的映射关系（x->y），而逻辑回归则通过sigmoid函数将映射值限定在(0,1)。sigmoid图像如下：  
+    回归是解决变量之间的映射关系（x->y），而逻辑回归则通过sigmoid函数将映射值限定在(0,1)。sigmoid图像如下：<br>  
  <div align=center>
-  <img src="imgs/sigmod.png" width="200" hegiht="100" div align=center /></div>
-  sigmoid公式：<a href="https://www.codecogs.com/eqnedit.php?latex=g(z)=\frac{1}{1&plus;e^{-z}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?g(z)=\frac{1}{1&plus;e^{-z}}" title="g(z)=\frac{1}{1+e^{-z}}" /></a><br>
-假设特征是x，线性函数可以表示为： 
-  <a href="https://www.codecogs.com/eqnedit.php?latex=z=\beta_{0}&plus;\beta_{1}&space;\mathit{x}_1&plus;\beta_{2}&space;\mathit{x}_2&plus;...&plus;\beta_{n}&space;\mathit{x}_n&space;=\vec{\beta}\vec{x}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?z=\beta_{0}&plus;\beta_{1}&space;\mathit{x}_1&plus;\beta_{2}&space;\mathit{x}_2&plus;...&plus;\beta_{n}&space;\mathit{x}_n&space;=\vec{\beta}\vec{x}" title="z=\beta_{0}+\beta_{1} \mathit{x}_1+\beta_{2} \mathit{x}_2+...+\beta_{n} \mathit{x}_n =\vec{\beta}\vec{x}" /></a><br>
-  ，而逻辑回归则是在其基础上套上一个sigmoid函数：
+  <img src="imgs/sigmod.png" width="200" hegiht="100" div align=center />
+  <a href="https://www.codecogs.com/eqnedit.php?latex=g(z)=\frac{1}{1&plus;e^{-z}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?g(z)=\frac{1}{1&plus;e^{-z}}" title="g(z)=\frac{1}{1+e^{-z}}" /></a></div><br>
+假设特征是x，线性函数可以表示为： <br>
+  <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=z=\beta_{0}&plus;\beta_{1}&space;\mathit{x}_1&plus;\beta_{2}&space;\mathit{x}_2&plus;...&plus;\beta_{n}&space;\mathit{x}_n&space;=\vec{\beta}\vec{x}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?z=\beta_{0}&plus;\beta_{1}&space;\mathit{x}_1&plus;\beta_{2}&space;\mathit{x}_2&plus;...&plus;\beta_{n}&space;\mathit{x}_n&space;=\vec{\beta}\vec{x}" title="z=\beta_{0}+\beta_{1} \mathit{x}_1+\beta_{2} \mathit{x}_2+...+\beta_{n} \mathit{x}_n =\vec{\beta}\vec{x}" /></a></div><br>
+  而逻辑回归则是在其基础上套上一个sigmoid函数：<br>
   <div align=center>
 <a href="https://www.codecogs.com/eqnedit.php?latex=h_{\beta}(x)=g(z)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?h_{\beta}(x)=g(z)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" title="h_{\beta}(x)=g(z)=\frac{1}{1+e^{\vec{\beta}\vec{x}}}" /></a>
 </div><br>
-  逻辑回归属于线性函数，具有线性决策边界（面）：
+  因此逻辑回归属于线性函数，具有线性决策边界（面）：
   <div align=center>
   <img src="imgs/sigmoid_line.png" width="400" hegiht="200" div align=center /></div>
 
  对于二分类，分类结果只有两种：y=1 or y=0，其概率分别为 
- <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" title="P(y=1|\beta )=h_{\beta}(x)=\frac{1}{1+e^{-\vec{\beta}\vec{x}}}" /></a> </div><br>
+ <div align=center style="border:3px;margin:10px;"><a href="https://www.codecogs.com/eqnedit.php?latex=P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(y=1|\beta&space;)=h_{\beta}(x)=\frac{1}{1&plus;e^{-\vec{\beta}\vec{x}}}" title="P(y=1|\beta )=h_{\beta}(x)=\frac{1}{1+e^{-\vec{\beta}\vec{x}}}" /></a> </div><br>
  <div align=center><a href="https://www.codecogs.com/eqnedit.php?latex=P(y=0|\beta&space;)=1-h_{\beta}(x)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?P(y=0|\beta&space;)=1-h_{\beta}(x)=\frac{1}{1&plus;e^{\vec{\beta}\vec{x}}}" title="P(y=0|\beta )=1-h_{\beta}(x)=\frac{1}{1+e^{\vec{\beta}\vec{x}}}" /></a> </div><br>
 因此最大似然估计为：
-<div align=center>
+<div align=center style="border:3px;margin:10px;">
 <a href="https://www.codecogs.com/eqnedit.php?latex=likelihood&space;=\prod_{i}^{&space;}{p(y=1|\beta&space;))^{y_{i}}p(y=0|\beta&space;))^{1-y_{i}}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?likelihood&space;=\prod_{i}^{&space;}{p(y=1|\beta&space;))^{y_{i}}p(y=0|\beta&space;))^{1-y_{i}}}" title="likelihood =\prod_{i}^{ }{p(y=1|\beta ))^{y_{i}}p(y=0|\beta ))^{1-y_{i}}}" /></a>
 </div><br>
- 对上述公式取log方便计算，同时为了将likelihood最大化问题转化为最小化问题，对上述公式取-log得到损失函数：<br>
+ 对上述公式取log方便计算，同时为了将likelihood最大化问题转化为最小化问题，对上述公式取-log得到损失函数：<br><br>
 <div align=center style="border:1px ;width:500px;margin:auto">
 <div align=left>
 <a href="https://www.codecogs.com/eqnedit.php?latex=loss&space;=-log(likelyhood)" target="_blank"><img src="https://latex.codecogs.com/png.latex?loss&space;=-log(likelyhood)" title="loss =-log(likelyhood)" /></a><br><br>
@@ -33,17 +33,17 @@
 <a href="https://www.codecogs.com/eqnedit.php?latex==\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" target="_blank"><img src="https://latex.codecogs.com/png.latex?=\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" title="=\sum log(1+e^{margin})-(1-y_{i})margin" /></a>
 </div></div><br>
 考虑一个样本比较方便，spark中也是这样做的，针对样本i，loss对于参数j的一阶gradient为： 
-<div align=center>
+<div align=center style="border:3px;margin:10px;">
 <a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;loss}{\partial&space;\beta&space;_{j}}=(h_{\beta&space;}(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast&space;multiplyer" target="_blank"><img src="https://latex.codecogs.com/png.latex?\frac{\partial&space;loss}{\partial&space;\beta&space;_{j}}=(h_{\beta&space;}(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast&space;multiplyer" title="\frac{\partial loss}{\partial \beta _{j}}=(h_{\beta }(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast multiplyer" /></a>
 </div><br>
 tips：以上margin和multiplier和spark源码中的变量一致。
 <br><br>
  <li>过拟合-正则项</li>
 为了减少过拟合，在损失函数中加入正则项，其目的是对参数进行限制，与数据无关。<br>
-<div align=center>
+<div align=center style="border:3px;margin:10px;">
 <a href="https://www.codecogs.com/eqnedit.php?latex=L_{total}(\beta&space;,x)=L_{model}(\beta&space;,x)&plus;L_{reg}(\beta)" target="_blank"><img src="https://latex.codecogs.com/png.latex?L_{total}(\beta&space;,x)=L_{model}(\beta&space;,x)&plus;L_{reg}(\beta)" title="L_{total}(\beta ,x)=L_{model}(\beta ,x)+L_{reg}(\beta)" /></a></div><br>
 常见的正则化手段：L1和L2。L1由于并非处处可导，因此求解需要专门的方法例如OWLQN<br>
-<div align=center>
+<div align=center style="border:3px;margin:10px;">
 <a href="https://www.codecogs.com/eqnedit.php?latex=L1&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\left&space;|&space;\beta&space;\right&space;|" target="_blank"><img src="https://latex.codecogs.com/png.latex?L1&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\left&space;|&space;\beta&space;\right&space;|" title="L1 : L_{reg}(\beta)=\lambda \sum \left | \beta \right |" /></a> <br><br>
 <a href="https://www.codecogs.com/eqnedit.php?latex=L2&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\beta&space;_{i}^{2}" target="_blank"><img src="https://latex.codecogs.com/png.latex?L2&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\beta&space;_{i}^{2}" title="L2 : L_{reg}(\beta)=\lambda \sum \beta _{i}^{2}" /></a>
 </div>
@@ -58,36 +58,37 @@ lr.regression采用了L-BFGS(L2)和OWLQN(L1)，分别针对L2和L1正则化，�
 <h2> 二、多元逻辑回归 </h2> 
 <ol type="1">
   <li>概率定义：</li>
-    spark2中multinomial逻辑回归采用的是softmax（与spark1.6不完全一致），可参考ufldl(http://ufldl.stanford.edu/tutorial/supervised/SoftmaxRegression/)，类别概率定义为： <div align=center>
+    spark2中multinomial逻辑回归采用的是softmax（与spark1.6不完全一致），可参考ufldl(http://ufldl.stanford.edu/tutorial/supervised/SoftmaxRegression/)，类别概率定义为： 
+    <div align=center style="border:3px;margin:10px;">
   <img src="imgs/multinomial_1.tiff" width="200" hegiht="100" div align=center /></div>  
   <div align=center>
-  <img src="imgs/multinomial_2.tiff" width="180" hegiht="100" div align=center /></div> 
+  <img src="imgs/multinomial_2.tiff" width="180" hegiht="100" div align=center /></div><br> 
   
- &nbsp;&nbsp;&nbsp;&nbsp;二元逻辑回归中权重为向量，多元逻辑回归中权重beta为矩阵，相当于多个二元逻辑回归（每个类别/每行）: <div align=center>
+ &nbsp;&nbsp;&nbsp;&nbsp;二元逻辑回归中权重为向量，多元逻辑回归中权重beta为矩阵，相当于多个二元逻辑回归（每个类别/每行）: <div align=center  style="border:3px;margin:10px;">
   <img src="imgs/multinomial_2_2.png" width="180" hegiht="100" div align=center /></div>  
  
-&nbsp;&nbsp;&nbsp;&nbsp;上述模型中的参数可以任意伸缩，即对于任意常数值，都可以被加到所有参数，而每个类别的概率值不发生变化：  <div align=center>
+&nbsp;&nbsp;&nbsp;&nbsp;上述模型中的参数可以任意伸缩，即对于任意常数值，都可以被加到所有参数，而每个类别的概率值不发生变化：  <div align=center style="border:3px;margin:10px;">
 <img src="imgs/multinomial_3.tiff" width="400" hegiht="300" div align=center /></div>
 
 <li>损失函数及其导数</li>   
-    对于数据中的一个实例instance，损失函数为：<div align=center>
+    对于数据中的一个实例instance，损失函数为：<div align=center style="border:3px;margin:10px;">
 <img src="imgs/multinomial_4.tiff" width="300" hegiht="100" div align=center /></div> 
 其中，<img src="imgs/multinomial_5.tiff" width="120" hegiht="100" div align=center /></div> 
-<br>
+<br><br>
  不论SGD,LBFGS还是OWLQN最优化，都需要计算损失函数对参数的一阶导数： 
- <div align=center>
+ <div align=center style="border:3px;margin:10px;">
 <img src="imgs/multinomial_6.tiff" width="400" hegiht="300" div align=center /></div> 
 其中，w_i是样本权重（暂时忽略不管）， 而 I_{y=k}：因为对第k个类别的参数beta_k求导，因此只有当前样本的y=k，损失函数的最后一项才计算：
 
-<div align=center>
+<div align=center style="border:3px;margin:10px;">
 <img src="imgs/multinomial_7.tiff" width="120" hegiht="120" div align=center /></div>
 <div align=center>
-<img src="imgs/multinomial_9.tiff" width="300" hegiht="300" div align=center /></div>
+<img src="imgs/multinomial_9.tiff" width="300" hegiht="300" div align=center /></div><br>
 上述公式中，当max(margin)>0时会导致运算溢出，因此需要一些调整，首先损失函数等价变换：
-<div align=center>
+<div align=center style="border:3px;margin:10px;">
 <img src="imgs/multinomial_8.tiff" width="500" hegiht="500" div align=center /></div>  
 进而，multiplier则变成：
-<div align=center>
+<div align=center style="border:3px;margin:10px;">
 <img src="imgs/multinomial_10.tiff" width="300" hegiht="300" div align=center /></div> 
 
 </ol>  
