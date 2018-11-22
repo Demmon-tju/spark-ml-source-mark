@@ -3,7 +3,7 @@
 <h2> 一、二元逻辑回归 </h2>  
 <ol type="1">
   <li>简介</li>
-    回归是解决变量之间的映射关系（x->y），而逻辑回归则通过sigmoid函数将映射值限定在(0,1)。sigmoid图像如下：<br>  
+    回归是解决变量之间的映射关系（x->y），而逻辑回归则通过sigmoid函数将映射值限定在(0,1)。sigmoid图像如下：<br><br>  
  <div align=center>
   <img src="imgs/sigmod.png" width="200" hegiht="100" div align=center />
   <a href="https://www.codecogs.com/eqnedit.php?latex=g(z)=\frac{1}{1&plus;e^{-z}}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?g(z)=\frac{1}{1&plus;e^{-z}}" title="g(z)=\frac{1}{1+e^{-z}}" /></a></div><br>
@@ -33,7 +33,7 @@
 <a href="https://www.codecogs.com/eqnedit.php?latex==\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" target="_blank"><img src="https://latex.codecogs.com/png.latex?=\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" title="=\sum log(1+e^{margin})-(1-y_{i})margin" /></a><br>
 <a href="https://www.codecogs.com/eqnedit.php?latex=margin=-\vec{\beta&space;}\vec{x}" target="_blank"><img src="https://latex.codecogs.com/png.latex?margin=-\vec{\beta&space;}\vec{x}" title="margin=-\vec{\beta }\vec{x}" /></a>
 </div></div><br>
-考虑一个样本比较方便，spark中也是这样做的，针对样本i，loss对于参数j的一阶gradient为： <br>
+考虑一个样本比较方便，spark中也是这样做的，针对样本i，loss对于参数j的一阶gradient为： <br><br>
 <div align=center style="border:3px;margin:10px;">
 <a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;loss}{\partial&space;\beta&space;_{j}}=(h_{\beta&space;}(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast&space;multiplyer" target="_blank"><img src="https://latex.codecogs.com/png.latex?\frac{\partial&space;loss}{\partial&space;\beta&space;_{j}}=(h_{\beta&space;}(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast&space;multiplyer" title="\frac{\partial loss}{\partial \beta _{j}}=(h_{\beta }(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast multiplyer" /></a><br>
 <a href="https://www.codecogs.com/eqnedit.php?latex=multiplier=h_{\beta&space;}(x)-y_{i}" target="_blank"><img src="https://latex.codecogs.com/png.latex?multiplier=h_{\beta&space;}(x)-y_{i}" title="multiplier=h_{\beta }(x)-y_{i}" /></a>
@@ -41,10 +41,10 @@
 tips：以上margin和multiplier和spark源码中的变量一致。
 <br><br>
  <li>过拟合-正则项</li>
-为了减少过拟合，在损失函数中加入正则项，其目的是对参数进行限制，与数据无关。<br>
+为了减少过拟合，在损失函数中加入正则项，其目的是对参数进行限制，与数据无关。<br><br>
 <div align=center style="border:3px;margin:10px;">
 <a href="https://www.codecogs.com/eqnedit.php?latex=L_{total}(\beta&space;,x)=L_{model}(\beta&space;,x)&plus;L_{reg}(\beta)" target="_blank"><img src="https://latex.codecogs.com/png.latex?L_{total}(\beta&space;,x)=L_{model}(\beta&space;,x)&plus;L_{reg}(\beta)" title="L_{total}(\beta ,x)=L_{model}(\beta ,x)+L_{reg}(\beta)" /></a></div><br>
-常见的正则化手段：L1和L2。L1由于并非处处可导，因此求解需要专门的方法例如OWLQN<br>
+常见的正则化手段：L1和L2。L1由于并非处处可导，因此求解需要专门的方法例如OWLQN<br><br>
 <div align=center style="border:3px;margin:10px;">
 <a href="https://www.codecogs.com/eqnedit.php?latex=L1&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\left&space;|&space;\beta&space;\right&space;|" target="_blank"><img src="https://latex.codecogs.com/png.latex?L1&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\left&space;|&space;\beta&space;\right&space;|" title="L1 : L_{reg}(\beta)=\lambda \sum \left | \beta \right |" /></a> <br><br>
 <a href="https://www.codecogs.com/eqnedit.php?latex=L2&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\beta&space;_{i}^{2}" target="_blank"><img src="https://latex.codecogs.com/png.latex?L2&space;:&space;L_{reg}(\beta)=\lambda&space;\sum&space;\beta&space;_{i}^{2}" title="L2 : L_{reg}(\beta)=\lambda \sum \beta _{i}^{2}" /></a>
@@ -164,7 +164,8 @@ lr.regression采用了L-BFGS(L2)和OWLQN(L1)，分别针对L2和L1正则化，�
           arrayBuilder += state.adjustedValue
         }
         bcFeaturesStd.destroy(blocking = false)
- 其中states表示状态迭代器，每个迭代进行更新，state类在breeze/optimize/FirstOrderMinimizer.scala中，包括x模型参数、value模型loss、grad梯度等：
+ <div style="text-indent:2em;">
+ 其中states表示状态迭代器，每个迭代进行更新，state类在breeze/optimize/FirstOrderMinimizer.scala中，包括x模型参数、value模型loss、grad梯度等：</div>
   
     case class State[+T, +ConvergenceInfo, +History](
        x: T,
@@ -180,7 +181,8 @@ lr.regression采用了L-BFGS(L2)和OWLQN(L1)，分别针对L2和L1正则化，�
       var convergenceReason: Option[ConvergenceReason] = None) {}
 
 ### 4.2  损失函数类 LogisticCostFun  
- &nbsp;&nbsp;&nbsp;&nbsp; 作用：在FirstOrderMinimizer的iterations中更新states时使用calculateObjective方法，其中调用DiffFunction.calculate。而LogisticCostFun则继承DiffFunction并重写calculate方法：计算loss 和 gradient with L2 regularization 
+ <div style="text-indent:2em;">
+ *作用*：在FirstOrderMinimizer的iterations中更新states时使用calculateObjective方法，其中调用DiffFunction.calculate。而LogisticCostFun则继承DiffFunction并重写calculate方法：计算loss 和 gradient with L2 regularization </div>
    <br>
   
 ```
@@ -277,7 +279,8 @@ private class LogisticCostFun(
 </ol>
 <br>
 ### 4.3   LogisticAggregator
-   &nbsp;&nbsp;&nbsp;&nbsp;该类中包含gradient和loss的计算，以及不同LogisticAggregator之间的合并。而gradient和loss计算又包括两部分二元和多元：binaryUpdateInPlace和multinomialUpdateInPlace
+   <div style="text-indent:2em;">
+   该类中包含gradient和loss的计算，以及不同LogisticAggregator之间的合并。而gradient和loss计算又包括两部分二元和多元：binaryUpdateInPlace和multinomialUpdateInPlace</div>
 <ol type="1">
   <li> binaryUpdateInPlace：binary逻辑回归</li> <br> 
    
@@ -377,9 +380,11 @@ private class LogisticCostFun(
     }  
    ```
   <br>
-<li>这段计算multiplier，gradient和loss：其中margin统一减去maxMargin以免计算爆炸，同时数据要进行standardization。 
+<li>multiplier,gradient,loss
+<div style="text-indent:2em;">
+下面计算multiplier，gradient和loss：其中margin统一减去maxMargin以免计算爆炸，同时数据要进行standardization。 
   
-  其中margin和multiplier是数组，维度取决于类别数，即对于每个类别k来说就是一个浮点数；而localGradientArray则是一个矩阵（这里将矩阵平铺成数组）。  
+  其中margin和multiplier是数组，维度取决于类别数，即对于每个类别k来说就是一个浮点数；而localGradientArray则是一个矩阵（这里将矩阵平铺成数组）。 </div> 
   
 tips：可以看成K个binary回归，分别计算margin，multiplier和gradient；一条样本，同时计算所有参数梯度localGradientArray。</li>
 <br> 
@@ -439,13 +444,15 @@ tips：可以看成K个binary回归，分别计算margin，multiplier和gradient
    </li>
 </ol> 
 ### 4.4   最优化方法（/breeze/optimize/）
-   &nbsp;&nbsp;&nbsp;&nbsp;在LogisticCostFun中只计算了参数的一阶导数gradient，然而源码中用的最优化方法是LBFGS和OWLQN（解决L1-norm不可微），因此只有gradient是不够的。最优化的重点在于确定参数的更新方向和步长。  
-   &nbsp;&nbsp;&nbsp;&nbsp;FirstOrderMinimizer中声明了（1）海塞阵估计方法History（2）参数更新方向chooseDescentDirection（3）步长determineStepSize。在iterations中更新states时要用到上述三个重要模块，具体的定义则在相应的最优化方法中。
+   <div style="text-indent:2em;">
+   在LogisticCostFun中只计算了参数的一阶导数gradient，然而源码中用的最优化方法是LBFGS和OWLQN（解决L1-norm不可微），因此只有gradient是不够的。最优化的重点在于确定参数的更新方向和步长。</div>  
+   <div style="text-indent:2em;">
+   FirstOrderMinimizer中声明了（1）海塞阵估计方法History（2）参数更新方向chooseDescentDirection（3）步长determineStepSize。在iterations中更新states时要用到上述三个重要模块，具体的定义则在相应的最优化方法中。</div>
    <ol>
-<li> LBFGS (breeze/optimize/LBFGS.scala)
+<li> LBFGS (breeze/optimize/LBFGS.scala)<br>
    <ol type="i">
    <li>还塞矩阵估计方法：`type History = LBFGS.ApproximateInverseHessian[T]`</li><br>
-   <li> chooseDescentDirection：迭代方向，海塞阵*梯度<br>
+   <li> chooseDescentDirection：迭代方向，海塞阵*梯度<br><br>
 ```
 protected def chooseDescentDirection(state: State, fn: DiffFunction[T]): T = {
     state.history * state.grad
@@ -481,7 +488,7 @@ protected def chooseDescentDirection(state: State, fn: DiffFunction[T]): T = {
   </li>
    </ol>
    </li>
-<li> OWLQN (breeze/optimize/OWLQN)，继承了LBFGS
+<li> OWLQN (breeze/optimize/OWLQN)，继承了LBFGS<br>
    <ol type="i">
    <li>还塞矩阵估计方法：继承了LBFGS的history，因为L1-norm的存在与否不影响Hessian矩阵的估计。</li><br>
    <li> chooseDescentDirection：继承了LBFGS，同时相应调整方向，解决L1不可导（可参考OWLQN原理，次梯度）<br>
