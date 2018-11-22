@@ -30,11 +30,13 @@
 <a href="https://www.codecogs.com/eqnedit.php?latex=loss&space;=-log(likelyhood)" target="_blank"><img src="https://latex.codecogs.com/png.latex?loss&space;=-log(likelyhood)" title="loss =-log(likelyhood)" /></a><br><br>
 <a href="https://www.codecogs.com/eqnedit.php?latex==-\sum&space;y_{i}log(h_{\beta&space;}(x_{i}))&space;&plus;&space;(1-y_{i})log(1-h_{\beta&space;}(x_{i}))" target="_blank"><img src="https://latex.codecogs.com/png.latex?=-\sum&space;y_{i}log(h_{\beta&space;}(x_{i}))&space;&plus;&space;(1-y_{i})log(1-h_{\beta&space;}(x_{i}))" title="=-\sum y_{i}log(h_{\beta }(x_{i})) + (1-y_{i})log(1-h_{\beta }(x_{i}))" /></a><br><br>
 <a href="https://www.codecogs.com/eqnedit.php?latex==\sum&space;log(1&plus;e^{-\vec{\beta&space;}\vec{x_{i}&space;}})-(-\vec{\beta&space;}\vec{x_{i}&space;})(1-y_{i})" target="_blank"><img src="https://latex.codecogs.com/png.latex?=\sum&space;log(1&plus;e^{-\vec{\beta&space;}\vec{x_{i}&space;}})-(-\vec{\beta&space;}\vec{x_{i}&space;})(1-y_{i})" title="=\sum log(1+e^{-\vec{\beta }\vec{x_{i} }})-(-\vec{\beta }\vec{x_{i} })(1-y_{i})" /></a><br><br>
-<a href="https://www.codecogs.com/eqnedit.php?latex==\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" target="_blank"><img src="https://latex.codecogs.com/png.latex?=\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" title="=\sum log(1+e^{margin})-(1-y_{i})margin" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex==\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" target="_blank"><img src="https://latex.codecogs.com/png.latex?=\sum&space;log(1&plus;e^{margin})-(1-y_{i})margin" title="=\sum log(1+e^{margin})-(1-y_{i})margin" /></a><br>
+<a href="https://www.codecogs.com/eqnedit.php?latex=margin=-\vec{\beta&space;}\vec{x}" target="_blank"><img src="https://latex.codecogs.com/png.latex?margin=-\vec{\beta&space;}\vec{x}" title="margin=-\vec{\beta }\vec{x}" /></a>
 </div></div><br>
-考虑一个样本比较方便，spark中也是这样做的，针对样本i，loss对于参数j的一阶gradient为： 
+考虑一个样本比较方便，spark中也是这样做的，针对样本i，loss对于参数j的一阶gradient为： <br>
 <div align=center style="border:3px;margin:10px;">
-<a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;loss}{\partial&space;\beta&space;_{j}}=(h_{\beta&space;}(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast&space;multiplyer" target="_blank"><img src="https://latex.codecogs.com/png.latex?\frac{\partial&space;loss}{\partial&space;\beta&space;_{j}}=(h_{\beta&space;}(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast&space;multiplyer" title="\frac{\partial loss}{\partial \beta _{j}}=(h_{\beta }(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast multiplyer" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=\frac{\partial&space;loss}{\partial&space;\beta&space;_{j}}=(h_{\beta&space;}(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast&space;multiplyer" target="_blank"><img src="https://latex.codecogs.com/png.latex?\frac{\partial&space;loss}{\partial&space;\beta&space;_{j}}=(h_{\beta&space;}(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast&space;multiplyer" title="\frac{\partial loss}{\partial \beta _{j}}=(h_{\beta }(x)-y_{i})x_{j}^{(i)}=x_{j}^{(i)}\ast multiplyer" /></a><br>
+<a href="https://www.codecogs.com/eqnedit.php?latex=multiplier=h_{\beta&space;}(x)-y_{i}" target="_blank"><img src="https://latex.codecogs.com/png.latex?multiplier=h_{\beta&space;}(x)-y_{i}" title="multiplier=h_{\beta }(x)-y_{i}" /></a>
 </div><br>
 tips：以上margin和multiplier和spark源码中的变量一致。
 <br><br>
