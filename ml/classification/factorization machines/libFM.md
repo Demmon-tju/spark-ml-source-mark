@@ -37,7 +37,8 @@
 <p style=" text-indent:2em;">
 根据任务不同，损失函数也会有所不同，主要介绍两种：解决回归问题的最小二乘损失，以及解决二分类的最大似然估计(取-log)。二分类与logistic regression类似，只不过线性函数中增加了特征组合部分。logistic regression的介绍和公式推导可以参考我的上一篇<a href="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/classification/logistic%20regression/Logistic%20Regression%20逻辑回归.md">文章</a>
 <div align=center ><img src="imgs/formula_loss.png" width="400" hegiht="400" /></div>
-由于此处将负样本定为<strong>-1</strong>，而不是0，因此二分类公式形式与我手推的最大似然公式略有不同，但其实只是换个表达形式而已。
+由于此处将负样本定为<strong>-1</strong>，而不是0，因此二分类公式形式与我手推的最大似然公式略有不同，但其实只是换个表达形式而已。下面附上在LR和FM的loss和gradient公式上的对比（手写公式，比较懒。。。）：
+<div align=center ><img src="imgs/formula_hand_2.jpeg" width="600" hegiht="600" /></div>
 </p>
 <li>损失函数求导</li>
 <p style=" text-indent:2em;">
@@ -49,7 +50,7 @@
 <ol type="I">
 <li>Stochastic gradient descent (SGD)</li>
 <p style=" text-indent:2em;">
-最常用的最优化随机梯度下降 SGD
+最常用的最优化随机梯度下降 SGD：每次迭代中，针对每个样本更新参数
 <div align=center ><img src="imgs/optimization_sgd.png" width="500" hegiht="400" /></div>
 未完待续。
 </p>
