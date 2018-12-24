@@ -151,4 +151,15 @@ spark中的实现位于org.apache.spark.mllib.tree.impurity.Variance
 
 </code></pre>
 
+<h4>2.4 信息增益</h4>
+<p style=" text-indent:2em;">
+在决策树中，信息增益(informatioin gain, IG)指根据某个特征进行分裂时，不确定性减少的程度，即不纯度下降的程度。对于二叉决策树，该节点根据某个特征进行分裂成左右两个子节点，那么怎么衡量分裂的好坏呢，怎么找到最好的分裂特征呢？根据IG原理：选择使信息增益最大的特征f进行分裂，即使不纯度下降的最多的特征。</p>
+<p style=" text-indent:2em;">
+上述 2.1-2.3 都是描述数据的不纯度指标，用impurity表示，都可以用来计算信息增益，在spark中也是这么做的：
+</p>
+<div align=center ><img src="imgs/gain.png" width="600" hegiht="200" /></div>
+<p style=" text-indent:2em;">
+根据上述公式，遍历特征f及其每个特征值，找到使得gain最大的特征和相应分裂指，即为最优分裂特征和最优分裂值。
+</p>
+<h4>注：spark中决策树的具体实现细节和trick在随机森林randomforest中，决策树作为随机森林的一个特例(树数量=1)，因此具体代码和详细内容将在下一篇randomforest中进行介绍</h4>
 </div>
