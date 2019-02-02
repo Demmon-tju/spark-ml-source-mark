@@ -24,7 +24,7 @@
 理论上，bagging的若分类器可以是任意模型，但是较为通用的若分类器主要有两种：一个是决策树，另一个就是神经网络。当若分类器为决策树是，bagging就变成了随机森林。以下就spark2.3的random forest的代码进行详细介绍。<br>
 需要强调的是：spark的实现中，不仅进行了样本采样，同时也进行了特征抽样（列采样）
 
-<h5>Tips：关于决策树的知识请参考上一篇文章<a herf="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/decision_tree.md">决策树 decision tree</a></h5>
+<h5>Tips：关于决策树的知识请参考上一篇文章<a href="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/decision_tree.md">决策树 decision tree</a></h5>
 
 </div>
 <h2>一、整体思路</h2>
@@ -276,7 +276,7 @@ case i if metadata.isCategorical(i) && metadata.isUnordered(i) =>
           //循环所有splitIndex（即例子中的1-7）
           val categories = extractMultiClassCategories(splitIndex + 1, featureArity)
           //CategoricalSplit类中包含leftCatgories数组，表示左侧子节点应该包含的特征值
-          //(即1的positions)，具体查看<a herf="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/tree_base.md">tree base</a>
+          //(即1的positions)，具体查看<a href="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/tree_base.md">tree base</a>
           new CategoricalSplit(i, categories.toArray, featureArity)
         }
         
@@ -322,7 +322,7 @@ Tips：根据bin进行split分裂成左右节点,那么左右节点都包含对�
 </div>
 <h2>三、树的构造：特征split</h2>
 <div>
-每个特征进行bin之后，形成了若干个(feature, bin)，根据该bin构造split，并计算其impurity，寻找其中最优split。Split类详解见<a herf="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/tree_base.md">tree base</a><br>
+每个特征进行bin之后，形成了若干个(feature, bin)，根据该bin构造split，并计算其impurity，寻找其中最优split。Split类详解见<a href="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/tree_base.md">tree base</a><br>
 <ol>
 如何根据bin构造split呢，分三种情况：
 <li>连续特征：根据特征值排序后，从左至右逐个bin构造split，即左节点为<=当前bin阈值的特征值，右节点为>bin；</li>
@@ -563,7 +563,7 @@ binsToBestSplit方法中
 </code>
 </ol>
 <h3>3、计算Impurity</h3>
-针对每个split，根据<a herf="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/decision_tree.md">决策树 decision tree</a>计算增益，并排序max即为最优split。具体代码RandomForest. calculateImpurityStats
+针对每个split，根据<a href="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/decision_tree.md">决策树 decision tree</a>计算增益，并排序max即为最优split。具体代码RandomForest. calculateImpurityStats
 <code><pre>
 /**
    * Calculate the impurity statistics for a given (feature, split) based upon left/right
@@ -629,5 +629,5 @@ binsToBestSplit方法中
 我的理解：每次分裂节点后，样本也会跟着分类，每个节点只会针对相应的数据进行计算。但是在spark的实现中，我没有找到这一处？？？望高人指点
 
 <h4>《参考》</h4>
-spark中树模型的基础类总结：<a herf="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/tree_base.md">tree base</a><br>
-决策树：<a herf="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/decision_tree.md">决策树 decision tree</a>
+spark中树模型的基础类总结：<a href="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/tree_base.md">tree base</a><br>
+决策树：<a href="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/decision_tree.md">决策树 decision tree</a>

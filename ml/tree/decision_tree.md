@@ -163,5 +163,5 @@ spark中的实现位于org.apache.spark.mllib.tree.impurity.Variance
 </p>
 <h4>注：</h4>
 <strong>此处只对决策树进行了理论介绍，许多实现细节还未介绍：例如关于如何根据特征划分成不同的子节点，连续值和离散值处理的不同点等。<br>
-spark中决策树的具体实现细节和trick在随机森林randomforest中，决策树作为随机森林的一个特例(树数量=1)，因此具体代码和详细内容将在下一篇<a herf="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/random_forest.md">random forest</a>中进行介绍<strong>
+spark中决策树的具体实现细节和trick在随机森林randomforest中，决策树作为随机森林的一个特例(树数量=1)，因此具体代码和详细内容将在下一篇<a href="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/random_forest.md">random forest</a>中进行介绍<strong>
 </div>              
