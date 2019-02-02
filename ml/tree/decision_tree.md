@@ -159,7 +159,9 @@ spark中的实现位于org.apache.spark.mllib.tree.impurity.Variance
 </p>
 <div align=center ><img src="imgs/gain.png" width="600" hegiht="200" /></div>
 <p style=" text-indent:2em;">
-根据上述公式，遍历特征f及其每个特征值，找到使得gain最大的特征和相应分裂指，即为最优分裂特征和最优分裂值。
+根据上述公式，遍历每个特征f及其每个分割值，找到使得gain最大的特征和相应分裂值，即为最优分裂特征和最优分裂值。
 </p>
-<h4>注：spark中决策树的具体实现细节和trick在随机森林randomforest中，决策树作为随机森林的一个特例(树数量=1)，因此具体代码和详细内容将在下一篇randomforest中进行介绍</h4>
-</div>
+<h4>注：</h4>
+<strong>此处只对决策树进行了理论介绍，许多实现细节还未介绍：例如关于如何根据特征划分成不同的子节点，连续值和离散值处理的不同点等。<br>
+spark中决策树的具体实现细节和trick在随机森林randomforest中，决策树作为随机森林的一个特例(树数量=1)，因此具体代码和详细内容将在下一篇<a herf="https://github.com/Demmon-tju/spark-ml-source-mark/blob/master/ml/tree/random_forest.md">random forest</a>中进行介绍<strong>
+</div>              
