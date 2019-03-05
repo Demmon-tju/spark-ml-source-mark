@@ -1,6 +1,6 @@
 <h1 align="center">梯度提升树 gradient boosting tree</h1>
 <h2>一、理论</h2>
-理论部分源自 Machine Learning-A Probabilistic Perspective(MLAPP)和Elements of Statistical Machine Learning(ESML)
+理论部分源自 <a href="https://eetyfiyw3hz08.storage.googleapis.com/EgNgdrYPD8nnRSPd1R08.pdf">Machine Learning-A Probabilistic Perspective(MLAPP)</a>和<a href="https://web.stanford.edu/~hastie/Papers/ESLII.pdf">Elements of Statistical Machine Learning(ESML)</a>
 
 <h3>1、boosting</h3>
 <p style=" text-indent:2em;">
