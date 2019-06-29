@@ -7,7 +7,7 @@
 <p style=" text-indent:2em;">
 不难看出，上述模型没有考虑特征的组合，假设特征onehot之后<code>x1</code>表示理科，<code>x2</code>表示文科，<code>x3</code>表示男，<code>x4</code>表示女。那么特征组合<code>x1x3</code>,<code>x2x4</code>可能就是比较有用的特征。因此可以穷举所有可能的特征组合，当然有些组合可能没用，那么模型学习到的系数就会接近于0 。</p>
 <p style=" text-indent:2em;">
-此处指考虑特征之间的两两组合，因为特征增加参数将指数增加，很难分析。
+此处仅仅考虑特征之间的两两组合，因为特征增加参数将指数增加，很难分析。
 <div align=center ><img src="imgs/linear_comb.png" width="250" hegiht="100" /></div>
 </p>
 </div>
@@ -18,7 +18,8 @@
 此处公式推导完全引用自文献 <a herf="http://doi.acm.org/10.1145/2168752.2168771">Factorization Machines with libFM</a>，其中加入一些自己的理解。上述公式中的n表示特征数量，以下将用p代替。</p> 
 <li>预测值\hat{y}简化</li>
 <p style=" text-indent:2em;">
-在前面特征组合的公式中，参数w是p•p的矩阵，但其实肯定是非常稀疏的，因为特征组合中有用的不多。为了降低参数规模，采用矩阵分解的方法<img src="imgs/mf_value.png" />其中k远小于p，因此参数规模由p•p，变成了p•k，即每个<code>特征</code>对应一个参数向量<code>v[k]</code>。
+在前面特征组合的公式中，参数w是p•p的矩阵，但其实肯定是非常稀疏的，因为特征组合中有用的不多。为了降低参数规模，采用矩阵分解的方法<img src="imgs/mf_value.png" />其中k远小于p，因此参数规模由p•p，变成了p•k，即每个<code>特征</code>对应一个参数向量<code>v[k]</code>，其中k表示隐向量v的维度，可以作为超参数调整。
+tips：标量vj,f的第一个下标表示特征，第二个下标表示隐因子
 </p><p style=" text-indent:2em;">
 参数替换后，y的预测值变为
 <div align=center ><img src="imgs/formula1.png" width="350" hegiht="100" /></div>
@@ -58,3 +59,4 @@
 </ol>
 <h2>二、代码开发</h2>
 <h2>参考文献</h2>
+美团技术博客 https://tech.meituan.com/2016/03/03/deep-understanding-of-ffm-principles-and-practices.html
